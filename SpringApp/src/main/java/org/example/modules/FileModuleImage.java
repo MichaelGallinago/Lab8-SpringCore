@@ -46,11 +46,9 @@ public class FileModuleImage implements FileModule {
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(file);
 
-            // Получаем директорию Exif
             ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
             if (directory != null) {
-                // Получаем все теги Exif из директории Exif
                 for (Tag tag : directory.getTags()) {
                     System.out.println(tag.getTagName() + " : " + tag.getDescription());
                 }

@@ -24,7 +24,11 @@ public class FileModuleDirectory implements FileModule {
     public void method1(File directory) {
         File[] files = directory.listFiles();
 
-        if (files == null) return;
+        if (files == null)
+        {
+            System.out.println("Файлы внутри выбранного каталога отсутствуют\n");
+            return;
+        }
 
         for (File file : files) {
             if (file.isFile()) {
@@ -53,12 +57,18 @@ public class FileModuleDirectory implements FileModule {
     public void method3(File directory) {
         File[] files = directory.listFiles();
 
-        if (files == null) return;
+        System.out.println();
+        if (files == null)
+        {
+            System.out.println("Каталоги внутри выбранного каталога отсутствуют\n");
+            return;
+        }
 
         for (File file : files) {
             if (file.isDirectory()) {
                 System.out.println(file.getName());
             }
         }
+        System.out.println();
     }
 }

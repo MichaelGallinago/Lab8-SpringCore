@@ -5,6 +5,7 @@ import org.example.utilities.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 import java.io.File;
 import java.util.List;
@@ -21,40 +22,45 @@ public class App {
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
-
-        System.out.println("Введите имя файла для обработки:");
-
-        FileModule fileModuleForThisFormat = null;
-
-        Scanner scanner = new Scanner(System.in);
-        String fileName = scanner.nextLine();
-        for (FileModule fileModule : fileModules) {
-            if (fileModule.isFileFormatSupported(fileName)) {
-                fileModuleForThisFormat = fileModule;
-                break;
-            }
-        }
-
-        if (fileModuleForThisFormat == null) {
-            System.out.println("Данный формат файла не поддерживается");
-            return;
-        }
-
-        System.out.println("Выберите, какую из предложенных функций вы бы хотели использовать:");
-        fileModuleForThisFormat.writeDescription();
         while (true) {
+            System.out.println("Введите имя файла для обработки, или введите 0 для выхода");
+
+            FileModule fileModuleForThisFormat = null;
+
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+
+            if (input.equals("0")) {
+                return;
+            }
+
+            for (FileModule fileModule : fileModules) {
+                if (fileModule.isFileFormatSupported(input)) {
+                    fileModuleForThisFormat = fileModule;
+                    break;
+                }
+            }
+
+            if (fileModuleForThisFormat == null) {
+                System.out.println("Данный формат файла не поддерживается");
+                continue;
+            }
+
+            System.out.println("Выберите, какую из предложенных функций вы бы хотели использовать:");
+            fileModuleForThisFormat.writeDescription();
+
             System.out.print("Введите номер выбранной функции:");
-            File file = FileUtilities.getFile(fileName);
+            File file = FileUtilities.getFile(input);
             switch (scanner.nextLine()) {
                 case ("1"):
                     fileModuleForThisFormat.method1(file);
-                    return;
+                    break;
                 case ("2"):
                     fileModuleForThisFormat.method2(file);
-                    return;
+                    break;
                 case ("3"):
                     fileModuleForThisFormat.method3(file);
-                    return;
+                    break;
                 default:
                     System.out.println("Вы не ввели правильный номер функции, попробуйте ещё раз");
                     break;

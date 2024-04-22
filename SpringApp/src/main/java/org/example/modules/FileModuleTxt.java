@@ -39,7 +39,7 @@ public class FileModuleTxt implements FileModule {
     public void method2(File file) {
         Map<Character, Integer> mapLetterToCount = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            // Считываем строки из файла
+
             String line;
             while ((line = reader.readLine()) != null) {
                 for (char letter : line.toCharArray()) {
@@ -58,7 +58,6 @@ public class FileModuleTxt implements FileModule {
     @Override
     public void method3(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            // Считываем строки из файла
 
             long count = 0;
             while (reader.read() != -1) {
